@@ -9,11 +9,34 @@ dotenv.config();
 // Initialize express app
 const app = express();
 
+const defaultAllowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+];
+
+const configuredOrigins = [
+  ...(process.env.FRONTEND_URLS || '').split(','),
+  process.env.FRONTEND_URL || '',
+]
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([...defaultAllowedOrigins, ...configuredOrigins]);
+
 // Middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,10 +48,11 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Server is running', status: 'ok' });
 });
 
-// Sample API routes (to be implemented)
+// API routes
 app.use('/api/courses', require('./routes/courseRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -120,6 +120,10 @@ const LearningNavbar = () => {
             <li className="learning-nav-item">
               <Link to="/learning/contact">Contact / Enquiry</Link>
             </li>
+
+            <li className="learning-nav-item">
+              <Link to="/learning/enquiries">Company Enquiries</Link>
+            </li>
           </ul>
         </div>
       </nav>

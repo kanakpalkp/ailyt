@@ -11,6 +11,7 @@ import LearningCourses from './pages/LearningCourses';
 import LearningInternshipPrograms from './pages/LearningInternshipPrograms';
 import LearningAbout from './pages/LearningAbout';
 import LearningContact from './pages/LearningContact';
+import LearningEnquiries from './pages/LearningEnquiries';
 import ITServices from './pages/ITServices';
 import ITServicesServices from './pages/ITServicesServices';
 import ITServicesIndustries from './pages/ITServicesIndustries';
@@ -51,6 +52,7 @@ function Main() {
         <Route path="/learning/internship-programs" element={<LearningInternshipPrograms />} />
         <Route path="/learning/about" element={<LearningAbout />} />
         <Route path="/learning/contact" element={<LearningContact />} />
+        <Route path="/learning/enquiries" element={<LearningEnquiries />} />
         <Route path="/it-services" element={<ITServices />} />
         <Route path="/it-services/services" element={<ITServicesServices />} />
         <Route path="/it-services/industries" element={<ITServicesIndustries />} />
