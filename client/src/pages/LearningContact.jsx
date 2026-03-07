@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Learning.css';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+import API_BASE_URL, { API_ENABLED } from '../config/api';
 
 const getFetchErrorMessage = (error, fallbackMessage) => {
   const message = String(error?.message || '').toLowerCase();
   const isNetworkError = error?.name === 'TypeError' || message.includes('failed to fetch');
+
+  if (!API_ENABLED) {
+    return 'Frontend-only mode is active. Enquiry API is not connected yet.';
+  }
 
   if (isNetworkError) {
     return `Cannot reach backend API at ${API_BASE_URL}. Please start server and verify CORS/API URL.`;
@@ -73,6 +76,10 @@ const LearningContact = () => {
     setSubmitSuccess('');
 
     try {
+      if (!API_ENABLED) {
+        throw new Error('Frontend-only mode is active. Enquiry API is not connected yet.');
+      }
+
       const response = await fetch(`${API_BASE_URL}/enquiries`, {
         method: 'POST',
         headers: {
