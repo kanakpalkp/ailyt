@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Learning.css';
+import { posterCourses } from '../data/courseCatalog';
 
 const Learning = () => {
   const courses = [
     {
-      category: 'English Speaking',
+      category: 'Ongoing Courses',
       items: [
-        'Spoken English',
-        'Confidence Building',
+        'Data Science with agentic AI',
+        'web & app developmenmt',
+  
         'Interview Skills'
       ]
     },
@@ -17,7 +19,7 @@ const Learning = () => {
       items: [
         'CCC (Course on Computer Concepts)',
         'O-Level',
-        'Basic Computers'
+      'Basic Computers'
       ]
     },
     {
@@ -29,7 +31,7 @@ const Learning = () => {
         'Tableau'
       ]
     }
-  ];
+   ];
 
   const whyChoose = [
     {
@@ -73,8 +75,95 @@ const Learning = () => {
     }
   ];
 
+  const [activePoster, setActivePoster] = useState(0);
+  const [isAutoPaused, setIsAutoPaused] = useState(false);
+  const resumeTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    if (isAutoPaused) {
+      return undefined;
+    }
+
+    const intervalId = setInterval(() => {
+      setActivePoster((prev) => (prev + 1) % posterCourses.length);
+    }, 6000);
+
+    return () => clearInterval(intervalId);
+  }, [isAutoPaused, posterCourses.length]);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const pauseAutoSlide = () => {
+    setIsAutoPaused(true);
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsAutoPaused(false);
+    }, 6000);
+  };
+
+  const handlePrevPoster = () => {
+    pauseAutoSlide();
+    setActivePoster((prev) =>
+      prev === 0 ? posterCourses.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextPoster = () => {
+    pauseAutoSlide();
+    setActivePoster((prev) => (prev + 1) % posterCourses.length);
+  };
+
   return (
     <div className="learning-page">
+      {/* Course Posters Strip */}
+      <section className="learning-posters" aria-label="Featured course posters">
+        <div className="posters-carousel">
+          <button
+            type="button"
+            className="poster-nav poster-nav-left"
+            onClick={handlePrevPoster}
+            aria-label="Previous poster"
+          >
+            ‹
+          </button>
+          <div className="poster-window">
+            <div
+              className="poster-slides"
+              style={{ transform: `translateX(-${activePoster * 100}%)` }}
+            >
+              {posterCourses.map((poster, index) => (
+                <div key={index} className="poster-slide">
+                  <Link
+                    to={`/learning/all-courses/${poster.slug}`}
+                    state={{ course: poster }}
+                    className="poster-link"
+                    aria-label={`View ${poster.title} details`}
+                  >
+                    <img src={poster.image} alt={`${poster.title} poster`} />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+          <button
+            type="button"
+            className="poster-nav poster-nav-right"
+            onClick={handleNextPoster}
+            aria-label="Next poster"
+          >
+            ›
+          </button>
+        </div>
+      </section>
+
       {/* Hero Section */}
       <section className="learning-hero">
         <div className="learning-hero-content">
@@ -82,8 +171,10 @@ const Learning = () => {
             <h1>Skill → Career</h1>
             <p>Transform your potential into professional expertise with AILYT Learning Centre</p>
             <div className="learning-hero-ctas">
-              <button className="cta-primary">Free Counselling</button>
-              <button className="cta-secondary">Explore Courses</button>
+              {/* <button className="cta-primary">Free Counselling</button> */}
+              <Link to="/learning/all-courses" className="cta-secondary">
+                Explore Courses
+              </Link>
             </div>
           </div>
           <div className="learning-hero-visual">
@@ -134,7 +225,7 @@ const Learning = () => {
                     </li>
                   ))}
                 </ul>
-                <Link to="/courses" className="course-link">View Details</Link>
+                <Link to="/learning/all-courses" className="course-link">View Details</Link>
               </div>
             ))}
           </div>
@@ -225,21 +316,14 @@ const Learning = () => {
           <h2>Ready to Transform Your Career?</h2>
           <p>Start your learning journey with AILYT today</p>
           <div className="cta-buttons">
-            <button className="cta-primary">Schedule Free Counselling</button>
-            <Link to="/contact" className="cta-secondary">Get in Touch</Link>
+            <Link to="/learning/counselling" className="cta-primary">
+              Schedule Free Counselling
+            </Link>
+            <Link to="/learning/contact" className="cta-secondary">Get in Touch</Link>
           </div>
         </div>
       </section>
       
-      <a
-        href="https://wa.me/8630611232?text=Hi%20AILYT%2C%20I%20would%20like%20to%20get%20in%20touch%20with%20you."
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hero-whatsapp-btn"
-        title="Chat with us on WhatsApp"
-      >
-        💬
-      </a>
     </div>
   );
 };

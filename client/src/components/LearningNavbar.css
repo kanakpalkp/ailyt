@@ -38,6 +38,17 @@
   font-weight: 600;
 }
 
+.learning-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.learning-home-icon {
+  width: 16px;
+  height: 16px;
+}
+
 .learning-nav-item a:hover {
   color: #d946ef;
 }

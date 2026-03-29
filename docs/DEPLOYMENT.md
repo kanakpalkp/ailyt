@@ -10,6 +10,7 @@ Target repository:
 ```bash
 git remote add personal git@github.com:kanakpalkp/ailyt.git
 git push personal HEAD:main
+scanf("%F")
 ```
 
 ## 2. Build Frontend for Production

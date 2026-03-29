@@ -7,11 +7,14 @@ import CommunityNavbar from './components/CommunityNavbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Learning from './pages/Learning';
-import LearningCourses from './pages/LearningCourses';
+// import LearningCourses from './pages/LearningCourses';
 import LearningInternshipPrograms from './pages/LearningInternshipPrograms';
 import LearningAbout from './pages/LearningAbout';
 import LearningContact from './pages/LearningContact';
 import LearningEnquiries from './pages/LearningEnquiries';
+import LearningAllCourses from './pages/LearningAllCourses';
+import LearningCounselling from './pages/LearningCounselling';
+import CourseDetails from './pages/CourseDetails';
 import ITServices from './pages/ITServices';
 import ITServicesServices from './pages/ITServicesServices';
 import ITServicesIndustries from './pages/ITServicesIndustries';
@@ -38,7 +41,9 @@ function App() {
 
 function Main() {
   const location = require('react-router-dom').useLocation();
-  const isLearning = location.pathname.startsWith('/learning');
+  const isLearning =
+    location.pathname.startsWith('/learning') ||
+    location.pathname.startsWith('/courses/');
   const isITServices = location.pathname.startsWith('/it-services');
   const isCommunity = location.pathname.startsWith('/community');
 
@@ -48,7 +53,9 @@ function Main() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/learning" element={<Learning />} />
-        <Route path="/learning/courses" element={<LearningCourses />} />
+        <Route path="/learning/counselling" element={<LearningCounselling />} />
+        <Route path="/learning/all-courses" element={<LearningAllCourses />} />
+        {/* <Route path="/learning/courses" element={<LearningCourses />} /> */}
         <Route path="/learning/internship-programs" element={<LearningInternshipPrograms />} />
         <Route path="/learning/about" element={<LearningAbout />} />
         <Route path="/learning/contact" element={<LearningContact />} />
@@ -61,6 +68,7 @@ function Main() {
         <Route path="/it-services/contact" element={<ITServicesContact />} />
         <Route path="/community" element={<Community />} />
         <Route path="/courses" element={<Courses />} />
+        <Route path="/learning/all-courses/:slug" element={<CourseDetails />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About />} />
         <Route path="/our-story" element={<OurStory />} />

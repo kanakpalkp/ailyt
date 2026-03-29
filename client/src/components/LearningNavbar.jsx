@@ -25,7 +25,18 @@ const LearningNavbar = () => {
 
           <ul className="learning-nav-menu">
             <li className="learning-nav-item">
-              <Link to="/learning">Home</Link>
+              <Link to="/learning" className="learning-home-link">
+                <svg
+                  className="learning-home-icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"
+                    fill="currentColor"
+                  />
+                </svg> 
+              </Link>
             </li>
 
             <li
@@ -33,37 +44,56 @@ const LearningNavbar = () => {
               onMouseEnter={() => toggleDropdown('courses')}
               onMouseLeave={() => { toggleDropdown('courses'); setOpenSubmenu(null); }}
             >
-              <button className="learning-link-btn">Courses ▾</button>
+              <button className="learning-link-btn">All Courses ▾</button>
               {openDropdown === 'courses' && (
                 <div className="learning-dropdown-menu">
+                  {/* <Link to="/learning/all-courses">All Courses</Link> */}
                   <div className="learning-submenu-group">
+                    <button
+                      className="learning-submenu-btn"
+                      onMouseEnter={() => setOpenSubmenu('ongoing')}
+                    >
+                      Full Stack Courses ▸
+                    </button>
+                    {openSubmenu === 'ongoing' && (
+                      <div className="learning-submenu">
+                       
+                        <Link to="/learning/all-courses/python">Python</Link>
+                        <Link to="/learning/all-courses/data-science">Data Science with Agentic AI</Link>
+                        <Link to="/learning/all-courses/web-development">Web Development</Link>
+                      </div>
+                    )}
+                  </div>
+                  {/* <div className="learning-submenu-group">
                     <button 
                       className="learning-submenu-btn"
                       onMouseEnter={() => setOpenSubmenu('english')}
                     >
-                      English Speaking ▸
+                      Ongoing courses ▸
                     </button>
                     {openSubmenu === 'english' && (
                       <div className="learning-submenu">
-                        <Link to="/learning/courses#spoken-english">Spoken English</Link>
-                        <Link to="/learning/courses#confidence">Confidence Building</Link>
-                        <Link to="/learning/courses#interview">Interview Skills</Link>
+                        <Link to="/learning/courses#spoken-english">Data Science with agentic AI</Link>
+                        <Link to="/learning/courses#confidence">web & app developmenmt</Link>
+                        <Link to="/learning/courses#interview">Interview Skill</Link>
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="learning-submenu-group">
                     <button 
                       className="learning-submenu-btn"
                       onMouseEnter={() => setOpenSubmenu('computer')}
                     >
-                      Computer Courses ▸
+                      Trending Courses ▸
                     </button>
                     {openSubmenu === 'computer' && (
                       <div className="learning-submenu">
+                        <Link to="/learning/all-courses/basic-computer">Basic Computer</Link>
                         <Link to="/learning/courses#ccc">CCC</Link>
                         <Link to="/learning/courses#olevel">O-Level</Link>
-                        <Link to="/learning/courses#basic-computers">Basic Computers</Link>
+                         
+                        
                       </div>
                     )}
                   </div>
@@ -93,17 +123,17 @@ const LearningNavbar = () => {
               onMouseEnter={() => toggleDropdown('internships')}
               onMouseLeave={() => toggleDropdown('internships')}
             >
-              <button className="learning-link-btn">Internship Programs ▾</button>
+              <button className="learning-link-btn">Internship▾</button>
               {openDropdown === 'internships' && (
                 <div className="learning-dropdown-menu">
-                  <Link to="/learning/internship-programs#6month">6-Month Internship Model</Link>
-                  <Link to="/learning/internship-programs#tech-tracks">Tech Tracks</Link>
-                  <Link to="/learning/internship-programs#tools">Tools & Workflow</Link>
+                  <Link to="/learning/internship-programs#6month">Real-Time Project</Link>
+                  <Link to="/learning/internship-programs#tech-tracks">Weekend Training</Link>
+                  <Link to="/learning/internship-programs#tools">Internship</Link>
                 </div>
               )}
             </li>
 
-            <li
+            {/* <li
               className="learning-nav-item dropdown"
               onMouseEnter={() => toggleDropdown('about')}
               onMouseLeave={() => toggleDropdown('about')}
@@ -115,15 +145,15 @@ const LearningNavbar = () => {
                   <Link to="/learning/about#infrastructure">Infrastructure (Smart Board, Hybrid)</Link>
                 </div>
               )}
-            </li>
+            </li> */}
 
             <li className="learning-nav-item">
-              <Link to="/learning/contact">Contact / Enquiry</Link>
+              <Link to="/learning/contact">Contact</Link>
             </li>
 
-            <li className="learning-nav-item">
+            {/* <li className="learning-nav-item">
               <Link to="/learning/enquiries">Company Enquiries</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>

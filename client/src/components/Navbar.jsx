@@ -90,28 +90,6 @@ const Navbar = () => {
             )}
           </li>
 
-          <li 
-            className="nav-item dropdown"
-            onMouseEnter={() => toggleDropdown('what-we-think')}
-            onMouseLeave={() => toggleDropdown('what-we-think')}
-          >
-            <button
-              className="nav-links dropdown-btn"
-              onClick={() => toggleDropdown('what-we-think')}
-            >
-              What we think
-              <span className={`chevron ${openDropdown === 'what-we-think' ? 'open' : ''}`}>
-                ▼
-              </span>
-            </button>
-            {openDropdown === 'what-we-think' && (
-              <div className="dropdown-menu">
-                <Link to="/blog" onClick={closeMenu}>Blog</Link>
-                {/* <a href="#">Insights</a> */}
-                {/* <a href="#">Resources</a> */}
-              </div>
-            )}
-          </li>
 
           <li 
             className="nav-item dropdown"
@@ -136,28 +114,6 @@ const Navbar = () => {
             )}
           </li>
 
-          <li 
-            className="nav-item dropdown"
-            onMouseEnter={() => toggleDropdown('careers')}
-            onMouseLeave={() => toggleDropdown('careers')}
-          >
-            <button
-              className="nav-links dropdown-btn"
-              onClick={() => toggleDropdown('careers')}
-            >
-              Careers
-              <span className={`chevron ${openDropdown === 'careers' ? 'open' : ''}`}>
-                ▼
-              </span>
-            </button>
-            {openDropdown === 'careers' && (
-              <div className="dropdown-menu">
-                <a href="#">Open Positions</a>
-                <a href="#">Internships</a>
-                {/* <a href="#">Culture</a> */}
-              </div>
-            )}
-          </li>
         </ul>
 
         {/* Right Side Icons */}
